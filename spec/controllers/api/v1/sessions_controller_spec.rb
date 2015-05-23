@@ -20,4 +20,11 @@ RSpec.describe Api::V1::SessionsController, :type => :controller do
     end
   end
 
+  context "unsuccessful validation" do
+    before { post :create, username: "blah", password: "blah" }
+    it "returns a 422 unprocessible entity" do
+      expect(response.status).to eq 422
+    end
+  end
+
 end

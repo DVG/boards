@@ -3,8 +3,12 @@ module Api
     class SessionsController < ApplicationController
 
       def create
-        @user = User.find_by(username: params[:username]).authenticate(params[:password])
-        render json: @user, serializer: SessionsSerializer, root: "session"
+        @user = User.find_by(username: params[:username]).try(:authenticate, params[:password])
+        if @user
+          render json: @user, serializer: SessionsSerializer, root: "session"
+        else
+          render json: {}, status: 422 
+        end
       end
 
     end
