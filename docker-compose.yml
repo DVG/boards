@@ -1,0 +1,28 @@
+api:
+  build: .
+  command: bin/rails server --port 3000 --binding 0.0.0.0
+  ports:
+   - "3000:3000"
+  volumes:
+   - .:/code
+  links:
+   - db
+
+db:
+  image: postgres
+  ports:
+    - "5432:5432"
+  volumes:
+    - ./volumes/etc/postgresql:/etc/postgresql
+    - ./volumes/var/log/postgresql:/var/log/postgresql
+    - ./volumes/var/lib/postgresql:/var/lib/postgresql
+
+frontend:
+  build: ./frontend
+  command: ember s --proxy api:3000
+  ports:
+    - "4200:4200"
+  volumes:
+    - .:/code/frontend
+  links:
+    - api

@@ -1,0 +1,18 @@
+default: &default
+  adapter: postgresql
+  host: localhost
+
+development:
+  <<: *default
+  database: boards_development
+
+test: &test
+  <<: *default
+  database: boards_test
+
+production:
+  <<: *default
+  database: boards_production
+
+cucumber:
+  <<: *test
