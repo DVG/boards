@@ -7,7 +7,7 @@ module Api
         if @user
           render json: @user, serializer: SessionsSerializer, root: "session"
         else
-          render json: {}, status: 422 
+          render json: { base: "The username or password you entered was incorrect" } , status: 422 
         end
       end
 

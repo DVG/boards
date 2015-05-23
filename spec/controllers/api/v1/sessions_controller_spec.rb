@@ -25,6 +25,9 @@ RSpec.describe Api::V1::SessionsController, :type => :controller do
     it "returns a 422 unprocessible entity" do
       expect(response.status).to eq 422
     end
+    it "returns a helpful message" do
+      expect(parsed_response["base"]).to eq "The username or password you entered was incorrect"
+    end
   end
 
 end
