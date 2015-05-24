@@ -4,7 +4,8 @@ RSpec.describe Api::V1::SessionsController, :type => :controller do
 
   let(:user) { create(:user) }
   let(:parsed_response) { JSON.parse(response.body) }
-  context "successful validation" do
+
+  context "successful authentication" do
     before { post :create, username: user.username, password: user.password }
     it "returns an auth token" do
       expect(parsed_response["session"].keys).to include "auth_token"
@@ -20,7 +21,7 @@ RSpec.describe Api::V1::SessionsController, :type => :controller do
     end
   end
 
-  context "unsuccessful validation" do
+  context "unsuccessful authentication" do
     before { post :create, username: "blah", password: "blah" }
     it "returns a 422 unprocessible entity" do
       expect(response.status).to eq 422

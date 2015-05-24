@@ -48,4 +48,5 @@ RSpec.configure do |config|
   # https://relishapp.com/rspec/rspec-rails/docs
   config.infer_spec_type_from_file_location!
   config.include FactoryGirl::Syntax::Methods
+  config.infer_base_class_for_anonymous_controllers = false
 end

@@ -1,6 +1,25 @@
 class ApplicationController < ActionController::API
-  # Prevent CSRF attacks by raising an exception.
-  # For APIs, you may want to use :null_session instead.
   include ActionController::Serialization
-  include ActionController::HttpAuthentication::Token
+  include ActionController::HttpAuthentication::Token::ControllerMethods
+  before_action :authenticate
+
+private
+
+  attr_accessor :current_user
+
+  def authenticate
+    authenticate_token || render_unauthorized
+  end
+
+  def authenticate_token
+    authenticate_with_http_token do |token, options|
+      @current_user = User.find_by(auth_token: token)
+    end
+  end
+
+  def render_unauthorized
+    self.headers['WWW-Authenticate'] = 'Token realm="Application"'
+    render json: { message: 'Bad credentials' }, status: 401
+  end
+
 end
