@@ -11,7 +11,7 @@ RSpec.describe "Token Authentication", type: :controller do
     let(:token) { user.auth_token }
     let(:parsed_response) { JSON.parse response.body }
     before do
-      controller.request.env['HTTP_AUTHORIZATION'] = ActionController::HttpAuthentication::Token.encode_credentials(token)
+      controller.request.env['HTTP_AUTHORIZATION'] = ActionController::HttpAuthentication::Token.encode_credentials(token, identity: user.email)
     end
     context "Valid Token" do
       it "sets current user based on the auth token" do

@@ -10,6 +10,8 @@ class User < ActiveRecord::Base
     uniqueness: true,
     presence: true
 
+  scope :identified_by, ->(identity) { where("username = ? or email = ?", identity, identity).first }
+
 private
 
   def encrypt_password
