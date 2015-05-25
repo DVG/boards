@@ -1,0 +1,8 @@
+development:
+  work_factor: 1
+
+test:
+  work_factor: 1
+
+production:
+  work_factor: 10

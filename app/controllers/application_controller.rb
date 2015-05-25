@@ -14,10 +14,8 @@ private
   def authenticate_token
     authenticate_with_http_token do |token, options|
       user = User.identified_by(options["identity"])
-      if secure_compare(user.auth_token, token)
-        @current_user = user
-      else
-        return false
+      user.authentication_tokens.any? do |auth_token|
+        @current_user = user if auth_token.secure_compare(token)
       end
     end
   end

@@ -11,10 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150522015741) do
+ActiveRecord::Schema.define(version: 20150525004154) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "authentication_tokens", force: :cascade do |t|
+    t.integer  "authenticatable_id"
+    t.string   "authenticatable_type"
+    t.string   "token_digest"
+    t.string   "salt"
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+  end
 
   create_table "boards", force: :cascade do |t|
     t.string   "name"
@@ -26,7 +35,6 @@ ActiveRecord::Schema.define(version: 20150522015741) do
     t.string   "username"
     t.string   "email"
     t.string   "password_digest"
-    t.string   "auth_token"
     t.string   "salt"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false

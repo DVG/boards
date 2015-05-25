@@ -8,4 +8,8 @@ class SessionsSerializer < ActiveModel::Serializer
   def current_email
     object.email
   end
+
+  def auth_token
+    object.token
+  end
 end

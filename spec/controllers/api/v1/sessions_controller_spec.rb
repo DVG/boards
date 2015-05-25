@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe Api::V1::SessionsController, :type => :controller do
 
   let(:user) { create(:user) }
+  before { allow(AuthenticationToken).to receive(:generate_token) { "abc123" } }
   let(:parsed_response) { JSON.parse(response.body) }
 
   context "successful authentication" do
@@ -11,7 +12,7 @@ RSpec.describe Api::V1::SessionsController, :type => :controller do
       expect(parsed_response["session"].keys).to include "auth_token"
     end
     it "returns the user's auth token" do
-      expect(parsed_response["session"]["auth_token"]).to eq user.auth_token 
+      expect(parsed_response["session"]["auth_token"]).to eq "abc123" 
     end 
     it "returns the user's username" do
       expect(parsed_response["session"]["current_username"]).to eq user.username
